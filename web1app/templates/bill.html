@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% block body %}
+
+{% load static %}
+<title>Bill - Bakery</title>
+<link rel="stylesheet" href="{% static 'css/bill.css' %}">
+<script src="/static/js/customize.js" defer></script>
+
+<body>
+    <h1>BILL</h1>
+    <h2 style="text-align: right;padding-right: 40px;">Customer: {{user}}</h2>
+    <div id="cart-items" style="font-size: 20px;align-items: center;"></div>
+    <div id="total-price"></div>
+    <button class="buy">Buy</button>
+    <h1 id="thankyou" style="margin-bottom: 0px;">Thank You..Visit Again..!!</h1>
+</body>
+
+<script>
+    // Fetch cart data from localStorage
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    // Function to calculate total
+    function calculateTotal() {
+        return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+    }
+
+    // Render cart items
+    function renderCart() {
+        const cartItemsElement = document.getElementById('cart-items');
+        const totalAmount = calculateTotal();
+        let cartHTML = '';
+
+        cart.forEach((item) => {
+            total = item.price*item.quantity
+            cartHTML += `
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+                <img src="${item.image}" alt="${item.name}" style="width: 60px; height: 60px;">
+                ${item.name} - $${item.price} x ${item.quantity}
+            </div>
+            <div style="text-align: right;padding-right:20px">$${total}</div>
+            </div>
+            `;
+        });
+
+        cartItemsElement.innerHTML = cartHTML;
+
+        // Display total price
+        document.getElementById('total-price').innerText = `Total: $${totalAmount.toFixed(2)}`;
+    }
+
+    // Clear cart and redirect to homepage
+    function clearCartAndRedirect() {
+        // Remove cart from localStorage
+        localStorage.removeItem('cart');
+        
+        // Redirect to homepage
+        window.location.href = '/';
+    }
+
+    // On page load, render cart
+    window.onload = function() {
+        renderCart();
+    }
+
+    // Event listener for the "Buy" button
+    document.querySelector('.buy').addEventListener('click', function() {
+        clearCartAndRedirect();
+    });
+</script>
+
+{% endblock %}

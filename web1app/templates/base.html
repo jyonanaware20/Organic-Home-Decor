@@ -1,0 +1,80 @@
+{% load static %}
+{% include 'navbar.html'%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-messaging.js"></script>
+
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/base.css'%}">
+    {% if is_logged_in %}
+    <div id="login-status">
+        Welcome, {{ logged_username }}! 
+    </div>
+    {% endif %}
+
+</head>
+<body>
+    <div id="base">
+        {% block body %}
+
+        {% endblock %}
+    </div>
+    <script>
+        // Your Firebase config object
+        const firebaseConfig = {
+          apiKey: "BJF7RCGl2I22Ez_fAFWemgyzF4-MzMU_w4C6CpLXs6pQx4j9b7au1tZg2-Pg6Lnz_dlWknhDIDtOd8MJXO59zgY",
+          authDomain: "your-app.firebaseapp.com",
+          projectId: "organicwebsite-a18fc",
+          messagingSenderId: "513709960818",
+          appId: "1:513709960818:web:04b34cc827c99721a5dceb"
+        };
+      
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const messaging = firebase.messaging();
+      
+        // Get CSRF token from cookies
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+      
+        // Request permission and get token
+        messaging.requestPermission()
+          .then(() => messaging.getToken({ vapidKey: "YOUR_PUBLIC_VAPID_KEY" })) // Optional for web push
+          .then(token => {
+            console.log("FCM Token:", token);
+            
+            // Send token to Django
+            fetch('/save-token/', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+              },
+              body: JSON.stringify({ token: token })
+            }).then(response => {
+              console.log("Token sent to backend.");
+            });
+          })
+          .catch(error => {
+            console.error("Error getting token:", error);
+          });
+      </script>
+      
+</body>
+</html>

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'css/account.css' %}">
+
+<!-- <h2>Login</h2> -->
+<form method="POST">
+    {% csrf_token %}
+    <table border="0px" cellspacing="3px">
+    {{ form.as_table }}
+    </table>
+    <button type="submit">Login</button>
+</form>
+<p>Don't Remember Password? <a href="{% url 'admin-reset-password' %}">Forget Password</a></p>
+<p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+{% endblock %}

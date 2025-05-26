@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earthly Goodness</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <script src="{% static 'js/home.js' %}" defer></script>
+    <script src="{% static 'js/customize.js' %}" defer></script>
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+</head>
+
+<body>
+    <section class="hero">
+        <h1 class="hero-header1">Earthly</h1>
+        <h1 class="hero-header2">Goodness</h1>
+    </section>
+    {% if user.is_authenticated %}
+        <div class="name">
+            <p>Welcome, {{ user.username }}!</p>
+        </div> 
+    {% endif %}
+    
+    <section class="hero1">
+        <h1>..Wonders..</h1>
+        <div class="hero1-slider">
+            <div class="box" data-id="1" data-name="Product 1" data-price="150" onclick="redirectToProductPage(this)">
+                <img src="{% static 'img/product1.jpg' %}" alt="Product 1">
+            </div>
+            <div class="box" data-id="2" data-name="Product 2" data-price="200" onclick="redirectToProductPage(this)">
+                <img src="{% static 'img/product14.webp' %}" alt="Product 1">
+            </div>
+            <div class="box" data-id="3" data-name="Product 3" data-price="250" onclick="redirectToProductPage(this)">
+                <img src="{% static 'img/product12.avif' %}" alt="Product 1">
+            </div>
+            <div class="box" data-id="3" data-name="Product 3" data-price="250" onclick="redirectToProductPage(this)">
+                <img src="{% static 'img/product5.jpg' %}" alt="Product 1">
+            </div>
+            <div class="box" data-id="3" data-name="Product 3" data-price="250" onclick="redirectToProductPage(this)">
+                <img src="{% static 'img/product6.jpg' %}" alt="Product 1">
+            </div>
+        </div>
+    </section>
+
+    <section class="about-us">
+        <div class="left">
+            <h1 class="h1-1">Welcome</h1>
+            <h1 class="h1-2">To</h1>
+            <h1 class="h1-3">Decor</h1>
+            <h1 class="h1-4">Heaven</h1>
+        </div>
+        <div class="vertical"></div>
+        <div class="right">
+            <h1 class="h2-1">🌿..100% Organic & Sustainable..🌿</h1>
+            <h1 class="h2-2">🌍..Eco-Friendly Materials..🌍</h1>
+            <h1 class="h2-3">💚..Handmade with Love..💚</h1>
+        </div>
+    </section>
+
+    <section class="collection">
+        <div class="newcoll">
+            <h1>NEW</h1>
+            <h1>COLLECTION</h1>
+        </div>
+        <div class="midimg">
+            <img src="{% static 'img/mid2.webp' %}" alt="Mid">
+        </div>
+    </section>
+
+    <div class="blank"></div>
+
+    <footer class="footer">
+        <h1 class="f1">FOOTER</h1>
+        <h1 class="f2">
+            <a href="#">HOME</a>
+            <a href="#">ABOUT</a>
+            <a href="#">BLOG</a>
+            <a href="#">CONTACT</a>
+        </h1>
+        <h1 class="f3"></h1>
+        <h1 class="f3"></h1>
+    </footer>
+</body>
+
+</html>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<link rel="stylesheet" href="{% static 'css/cart.css' %}">
+<script src="{% static 'js/customize.js' %}" defer></script>
+
+
+<h1>Your Cart 🛒</h1>
+<div id="cart-items">
+    
+</div>
+<p id="empty-cart-message">Your cart is empty.</p>
+<button class="clear">Clear</button>
+<button class="checkout"><a href="/bill">Checkout</a></button>
+<script src="{% static 'js/cart.js' %}" defer></script>
+{% endblock %}

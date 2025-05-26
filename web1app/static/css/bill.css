@@ -1,0 +1,215 @@
+body {
+    font-family: 'Source Sans Pro', sans-serif; /* Source Sans Pro font set kiya gaya hai */
+    margin-top: 100px; /*Top margin 100px add kiya gaya hai */
+    margin-left: 40px; /* Left margin 40px add kiya gaya hai */
+    padding: 0; /* Default padding remove ki gayi hai */
+    background-color: #030303; /* Page ke liye dark background color */
+    color: white; /* White color text ka */
+    font-size: 15px; /* Font size 15px set kiya gaya hai */
+}
+
+.container {
+    width: 90%; /* Container ki width 90% rakhi gayi hai */
+    max-width: 1200px; /* Max width 1200px rakha gaya hai */
+    margin: 0 auto; /* Container ko center me rakha gaya hai */
+    padding: 20px; /* Container ke andar 20px padding */
+    font-size: 20px; /* Container ke text ka font size 20px */
+}
+
+.global-headline {
+    text-align: center; /* Headline ko center me rakha gaya hai */
+    margin-bottom: 20px; /* Headline ke neeche 20px ka space diya gaya hai */
+}
+
+.sub-headline {
+    font-size: 20px; /* Sub-headline ka font size 20px rakha gaya hai */
+    color: #888; /* Lighter gray color diya gaya hai */
+}
+
+.headline {
+    font-size: 32px; /* Main headline ka font size 32px rakha gaya hai */
+    color: #333; /* Dark gray color */
+    font-weight: bold; /* Font ko bold banaya gaya hai */
+    text-transform: uppercase; /* Text ko uppercase me convert kiya gaya hai */
+}
+
+#cart-items {
+    background-color: #070707; /* Cart ke liye dark background color */
+    padding: 20px; /* Cart ko 20px padding diya gaya hai */
+    border-radius: 10px; /* Corners ko rounded banaya gaya hai */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Light shadow effect diya gaya hai */
+    margin-bottom: 30px; /* Cart ke neeche 30px ka margin */
+}
+
+#cart-items img {
+    width: 80px; /* Image ki width 80px rakhi gayi hai */
+    height: 80px; /* Image ki height 80px rakhi gayi hai */
+    object-fit: cover; /* Image ko fit hone ke liye cover use kiya gaya hai */
+    border-radius: 5px; /* Image ke corners ko rounded banaya gaya hai */
+    margin-right: 15px; /* Image aur text ke beech me 15px ka space diya gaya hai */
+}
+
+.cart-item {
+    display: flex; /* Flex container ka use kiya gaya hai */
+    justify-content: space-between; /* Items ke beech space diya gaya hai */
+    align-items: center; /* Items ko vertically center kiya gaya hai */
+    margin-bottom: 15px; /* Cart item ke neeche 15px ka margin */
+}
+
+.cart-item p {
+    margin: 0; /* Default margin ko remove kiya gaya hai */
+    font-size: 18px; /* Cart item ka font size 18px rakha gaya hai */
+    color: #333; /* Dark gray color text ka */
+}
+
+.cart-item .quantity-price {
+    display: flex; /* Flex container banaya gaya hai quantity aur price ke liye */
+    flex-direction: column; /* Column me arrange kiya gaya hai */
+    text-align: right; /* Right align kiya gaya hai */
+    font-size: 32px; /* Price ka font size 24px rakha gaya hai */
+
+}
+
+.cart-item .quantity-price .quantity {
+    font-weight: 700; /* Quantity ko bold banaya gaya hai */
+    color: #555; /* Medium gray color diya gaya hai */
+    font-size: 32px; /* Price ka font size 24px rakha gaya hai */
+
+}
+
+#total-price {
+    text-align: right; /* Total ko center me align kiya gaya hai */
+    margin-top: 40px; /* Total section ke upar 40px ka space diya gaya hai */
+    font-size: 32px; /* Price ka font size 24px rakha gaya hai */
+    padding-right: 40px;
+}
+
+#total-price h3 {
+    font-size: 28px; /* Total label ka font size 28px rakha gaya hai */
+    color: #333; /* Dark gray color */
+}
+
+#total-price p {
+    font-size: 40px; 
+    color: #e60000; /* Red color total price ke liye */
+    font-weight: bold; /* Bold font style total price ka */
+}
+
+h1 {
+    padding-left: 20px; /* Left padding 20px */
+    /* padding-top: 20px; Top padding 20px */
+}
+
+h2 {
+    font-size: 25px;
+    padding-left: 20px; /* Left padding 20px */
+    padding-top: 20px; /* Top padding 20px */
+}
+.buy {
+    background: linear-gradient(45deg, #14850a, #14850a); /* Gradient background for a dynamic look */
+    color: white;
+    border: none;
+    padding: 18px 36px;
+    font-size: 20px; 
+    font-weight: bold;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block; 
+    border-radius: 50px;
+    cursor: pointer; 
+    transition: all 0.4s ease-out; 
+    box-shadow: 0 10px 30px rgba(255, 111, 97, 0.4); 
+    position: relative; 
+}
+
+.buy:hover {
+    background: linear-gradient(45deg, #14850a, #14850a); 
+    transform: translateY(-6px); 
+    box-shadow: 0 15px 45px #12ee2f;
+    filter: brightness(1.1); 
+}
+
+.buy:active {
+    transform: translateY(2px); 
+    box-shadow: 0 5px 20px rgba(255, 111, 97, 0.3); 
+}
+
+.buy::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.15));
+    opacity: 0;
+    border-radius: 50px;
+    transition: opacity 0.3s ease-in-out; 
+}
+
+.buy:hover::before {
+    opacity: 1; 
+}
+
+.buy span {
+    position: relative;
+    z-index: 2;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.buy:focus {
+    outline: none;
+}
+
+.icon-cart {
+    margin-left: 20px;
+}
+.icon-cart {
+    display:inline;
+    justify-content: right;
+    align-items: end;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+    position: relative;
+}
+.icon-cart svg{
+    width: 30px;
+    height: 30px;
+}
+.icon-cart span{
+    display:flex;
+    width: 15px;
+    height: 15px;
+    background-color: rgb(92, 156, 33);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 50%;
+    position: absolute;
+    top:20px;
+    right: -20%;
+}
+
+#cart-count{
+    font-size: 10px;
+}
+
+#thankyou {
+    margin-bottom: 20px;
+    animation: subtleBounce 2.5s ease-in-out infinite; 
+    text-align: center; 
+    font-size: 36px;
+    color: #2be91a; 
+    font-weight: bold;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); 
+}
+
+@keyframes subtleBounce {
+    0%, 100% {
+        transform: translateY(0); /* normal */
+    }
+    50% {
+        transform: translateY(-10px); /* thoda upar */
+    }
+}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<link rel="stylesheet" href="{% static 'css/product.css'%}">
+<body>
+    <h1 class="title">✨ Organic Products ✨</h1>
+    <section class="filter-sort">
+        <div class="filter-section">
+            <label for="category">Category:</label>
+            <select id="category" onchange="filterProducts()">
+                <option value="all">All</option>
+                <option value="decor">Decor</option>
+                <option value="kitchen">Kitchen</option>
+            </select>
+        </div>
+        
+        <div class="sort-section">
+            <label for="sort">Sort By:</label>
+            <select id="sort" onchange="sortProducts()">
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="id-asc">Relevance</option>
+            </select>
+        </div>
+    </section>
+    
+    <div id="toast-container"></div>
+    <section class="products">
+    {% for product in products %}
+        <div class="menu-item" data-id="{{ product.id }}" data-name="{{ product.name }}" data-price="{{ product.price }}" data-category="{{ product.category|lower }}" onclick="redirectToProductPage(this)">
+            <img src="{{product.image.url}}" alt="{{ product.image }}">
+            <h3>{{ product.name }}</h3>
+            <p>{{ product.description }}</p>
+            <p class="price">${{ product.price }}</p>
+            <button>Add to Cart</button>
+        </div>
+    {% endfor %}
+    </section>
+
+    <footer>✨ Nature’s Beauty, Delivered to You ✨</footer>
+</body> 
+<script src="{% static 'js/cart.js' %}" defer></script>
+<script src="{% static 'js/filter_sort.js' %}" defer></script>
+{% endblock %}

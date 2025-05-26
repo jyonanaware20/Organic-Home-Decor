@@ -1,0 +1,39 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/base.css'%}">
+<header>
+    <div class="container">
+        <nav class="navbar">
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-times"></i>
+            </div>
+            <h1 id="title">Website</h1>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="/" class="nav-link active">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'product' %}" class="nav-link">Products</a>
+                </li>
+                <li class="nav-item account-item">
+                    <a href="{% url 'login' %}" class="nav-link">Account</a>
+                    <ul class="dropdown">
+                        {% if is_logged_in %}
+                        <li><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+                        {% else %}
+                        <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+                        <li><a href="{% url 'register' %}" class="nav-link">Register</a></li>
+                        {% endif %}
+                    </ul>
+                </li>
+                <div class="icon-cart">
+                <a href="/cart" title="shopping bag icons"><img src="{% static 'img/cart.png' %}" alt=""></a>
+                <span id="cart-count">0</span>
+                </div>
+                
+            </ul>
+        </nav>
+    </div>
+        
+</header>
+    
