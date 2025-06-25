@@ -1,16 +1,15 @@
 from django.shortcuts import render,redirect
-from django.contrib.auth import login,logout,authenticate
+# from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.forms import UserCreationForm
 from .forms import registerform, LoginForm,ForcePasswordChangeForm
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .models import Register
-from django.contrib.auth.hashers import make_password
-from django.contrib.auth.hashers import check_password
+from .models import Register,Order,OrderItem
+# from django.contrib.auth.hashers import make_password
+# from django.contrib.auth.hashers import check_password
 import random
-
-
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def home(request):
@@ -18,7 +17,7 @@ def home(request):
     return render(request,'home.html', {'is_logged_in': is_logged_in})
 
 def view_product(request):
-    products = Product.objects.all()  # Ensure you have products in DB
+    products = Product.objects.all()
     return render(request,'product.html', {'products': products})
 
 
@@ -50,10 +49,9 @@ def login_view(request):
 
             if user.is_default_password:
                 return redirect('forcepassword')
-            # Retrieve the stored redirect URL (if available)
+            
             next_url = request.session.pop('redirect_url', None)
 
-            # Nested if-else to check session before redirecting
             if request.session.get('user_id'):
                 username = request.session.get('username')
                 return redirect(next_url if next_url else '/')
@@ -66,7 +64,6 @@ def login_view(request):
             return render(request, "login.html", con)
 
     else:
-        # Store the next URL in session if provided in GET request (from checkout or billing page)
         if 'next' in request.GET:
             request.session['redirect_url'] = request.GET['next']
         
@@ -128,7 +125,7 @@ def forget_password(request):
     
     return render(request, 'forget.html')
 
-DEFAULT_PASSWORD = 'Temp@1234'
+# DEFAULT_PASSWORD = 'Temp@1234'
 
 from django.contrib.auth.hashers import make_password
 
@@ -163,7 +160,7 @@ def admin_reset_password(request):
 def forcepassword(request):
     user_id = request.session.get('user_id')
     if not user_id:
-        return redirect('login')  # If not logged in
+        return redirect('login') 
 
     user = Register.objects.get(id=user_id)
 
@@ -172,13 +169,90 @@ def forcepassword(request):
         if form.is_valid():
             new_password = form.cleaned_data['new_password']
             user.password = new_password
-            user.is_default_password = False  # ✅ clear default password flag
+            user.is_default_password = False  
             user.save()
 
             messages.success(request, "Password changed successfully. Please log in again.")
-            request.session.flush()  # ✅ clear session for fresh login
+            request.session.flush() 
             return redirect('login')
     else:
         form = ForcePasswordChangeForm()
 
     return render(request, 'force_password_change.html', {'form': form})
+
+import json
+from django.http import JsonResponse
+
+
+# def place_order_js(request):
+#     if request.method == 'POST':
+#         data = json.loads(request.body)
+#         cart = data.get('cart', [])
+
+#         user_id = request.session.get('user_id')
+#         if not user_id:
+#             return JsonResponse({'error': 'Not logged in'}, status=403)
+#         # 🛡 Safely fetch Register user
+#         try:
+#             register_user = Register.objects.get(id=user_id)
+#         except Register.DoesNotExist:
+#             return JsonResponse({'error': 'Customer not found'}, status=404)
+#         print(register_user,type(register_user))
+
+#         for item in cart:
+#             product_id = item.get('id')
+#             try:
+#                 product = Product.objects.get(id=product_id)
+#                 print(product,type(product))
+#             except Product.DoesNotExist:
+#                 continue  # skip this product if not found
+
+#             try:
+#                 Order.objects.create(
+#                     user=register_user,
+#                     product=product,
+#                     quantity=item.get('quantity', 1),
+#                     status='Pending'
+#                 )
+#             except Exception as e:
+#                 print(register_user,product,item.get('quantity'))
+#                 print("Error creating order:", e)
+#                 continue
+
+#         return JsonResponse({'message': 'Order placed!'})
+
+#     return JsonResponse({'error': 'Invalid request'}, status=400)
+def place_order_js(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        cart = data.get('cart', [])
+
+        user_id = request.session.get('user_id')
+        if not user_id:
+            return JsonResponse({'error': 'Not logged in'}, status=403)
+
+        try:
+            register_user = Register.objects.get(id=user_id)
+        except Register.DoesNotExist:
+            return JsonResponse({'error': 'Customer not found'}, status=404)
+
+        if not cart:
+            return JsonResponse({'error': 'Cart is empty'}, status=400)
+
+        # ✅ Create one Order only
+        order = Order.objects.create(user=register_user, status='Pending')
+
+        for item in cart:
+            try:
+                product = Product.objects.get(id=item['id'])
+                OrderItem.objects.create(
+                    order=order,
+                    product=product,
+                    quantity=item.get('quantity', 1)
+                )
+            except Product.DoesNotExist:
+                continue
+
+        return JsonResponse({'message': 'Order placed!'})
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)

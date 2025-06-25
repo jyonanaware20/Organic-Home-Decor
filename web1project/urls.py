@@ -36,5 +36,6 @@ urlpatterns = [
     path('forget/', v.forget_password,name='forget'),
     path('admin-reset-password/', admin_reset_password, name='admin-reset-password'),
     path('forcepassword/', v.forcepassword, name='forcepassword'),
+    path('place_order_js/', v.place_order_js, name='place_order_js'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
